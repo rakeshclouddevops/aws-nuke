@@ -1,28 +1,36 @@
-name: Run cloud-nuke
-
+name: Destroy AWS Resources
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # This will run daily at midnight. Adjust as needed.
-
+    - cron: '0 0 * * *'  # Runs at midnight every day
+  workflow_dispatch:    # Allows manual triggering
 jobs:
-  cloud-nuke:
+  destroy-resources:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install cloud-nuke
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Install Cloud Nuke
         run: |
-          curl -LO https://github.com/gruntwork-io/cloud-nuke/releases/download/v0.37.1/cloud-nuke_darwin_amd64
+          curl -LO https://github.com/gruntwork-io/cloud-nuke/releases/download/v0.37.1/cloud-nuke_linux_amd64
           chmod +x cloud-nuke_linux_amd64
           sudo mv cloud-nuke_linux_amd64 /usr/local/bin/cloud-nuke
-
-      - name: Run cloud-nuke
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Verify Cloud Nuke Installation
         run: |
-          cloud-nuke aws --region us-east-1  # Adjust the region as needed
+          /usr/local/bin/cloud-nuke --version
+      - name: Run Cloud Nuke
+        run: |
+          /usr/local/bin/cloud-nuke aws --region us-east-1 --region us-east-2 --force
+
+
+
+
+
+
+
 
