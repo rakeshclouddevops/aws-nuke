@@ -26,5 +26,6 @@ jobs:
       - name: Run Cloud Nuke to delete specific resources
         run: |
           /usr/local/bin/cloud-nuke aws --region us-east-1 --resource-type ec2 --resource-type rds --resource-type s3 --force
+          /usr/local/bin/cloud-nuke aws --exclude-resource-type s3 --exclude-resource-type ec2
           /usr/local/bin/cloud-nuke aws --region us-east-2 --resource-type ec2 --resource-type rds --resource-type s3 --force
           /usr/local/bin/cloud-nuke aws --region ap-south-1 --resource-type ec2 --resource-type rds --resource-type s3 --force
