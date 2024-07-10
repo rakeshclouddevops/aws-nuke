@@ -27,3 +27,4 @@ jobs:
         run: |
           /usr/local/bin/cloud-nuke aws --region us-east-1 --resource-type ec2 --resource-type rds --resource-type s3 --force
           /usr/local/bin/cloud-nuke aws --region us-east-2 --resource-type ec2 --resource-type rds --resource-type s3 --force
+          /usr/local/bin/cloud-nuke aws --region ap-south-1 --resource-type ec2 --resource-type rds --resource-type s3 --force
