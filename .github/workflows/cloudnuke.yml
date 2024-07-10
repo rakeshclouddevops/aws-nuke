@@ -1,4 +1,4 @@
-name: Destroy AWS Resources
+name: Destroy Specific AWS Resources
 on:
   schedule:
     - cron: '0 0 * * *'  # Runs at midnight every day
@@ -23,14 +23,7 @@ jobs:
       - name: Verify Cloud Nuke Installation
         run: |
           /usr/local/bin/cloud-nuke --version
-      - name: Run Cloud Nuke
+      - name: Run Cloud Nuke to delete specific resources
         run: |
-          /usr/local/bin/cloud-nuke aws --region us-east-1 --region us-east-2 --force
-
-
-
-
-
-
-
-
+          /usr/local/bin/cloud-nuke aws --region us-east-1 --resource-type ec2 --resource-type rds --resource-type s3 --force
+          /usr/local/bin/cloud-nuke aws --region us-east-2 --resource-type ec2 --resource-type rds --resource-type s3 --force
