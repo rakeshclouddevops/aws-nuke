@@ -1,8 +1,8 @@
 aws:
   region1: us-east-1
   region2: us-east-2
-  access_key_id:
-  secret_access_key:
+  access_key_id: AKIAY2EDY5ODHNVQRFT2
+  secret_access_key: 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
 cloudnuke:
   version: v0.37.1
   services:
